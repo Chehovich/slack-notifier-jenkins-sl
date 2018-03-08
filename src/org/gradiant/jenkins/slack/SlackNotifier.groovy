@@ -84,7 +84,7 @@ void notifyResultWithArtifacts(String artifacts) {
     testSummary = jenkinsTestsSummary.getTestSummary()
   }
 
-  def message = formatter.format "${statusMessage} after ${duration}", changes, testSummary, artifacts
+  def message = formatter.format2 "${statusMessage} after ${duration}", changes, testSummary, artifacts
 
   sender.send message, color
 }
