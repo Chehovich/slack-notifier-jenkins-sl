@@ -16,7 +16,7 @@ String format(String title = '', String message = '', String testSummary = '') {
   return result
 }
 
-String format(String title = '', String message = '', String testSummary = '', String artifact = '') {
+String format2(String title = '', String message = '', String testSummary = '', String artifact = '') {
   def helper = new JenkinsHelper()
 
   def project = helper.getProjectName()
