@@ -58,7 +58,7 @@ void notifyResult() {
   sender.send message, color
 }
 
-void notifyCustomResult(String custom) {
+void notifyResultWithArtifacts(String artifacts) {
   JenkinsHelper helper = new JenkinsHelper()
   JenkinsStatus status = new JenkinsStatus()
   SlackFormatter formatter = new SlackFormatter()
@@ -84,7 +84,7 @@ void notifyCustomResult(String custom) {
     testSummary = jenkinsTestsSummary.getTestSummary()
   }
 
-  def message = formatter.format "${statusMessage} after ${duration}", changes + " " + custom, testSummary
+  def message = formatter.format "${statusMessage} after ${duration}", changes, testSummary, artifacts
 
   sender.send message, color
 }
