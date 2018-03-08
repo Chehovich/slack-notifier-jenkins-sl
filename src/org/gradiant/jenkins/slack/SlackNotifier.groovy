@@ -84,7 +84,7 @@ void notifyCustomResult(String custom) {
     testSummary = jenkinsTestsSummary.getTestSummary()
   }
 
-  def message = formatter.format "${statusMessage} after ${duration}", changes, testSummary, custom
+  def message = formatter.format "${statusMessage} after ${duration}", changes + " " + custom, testSummary
 
   sender.send message, color
 }
