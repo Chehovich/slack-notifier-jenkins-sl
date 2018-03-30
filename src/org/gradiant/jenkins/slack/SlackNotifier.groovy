@@ -98,6 +98,37 @@ void notifyResultWithArtifacts(String artifacts) {
   sender.send message, color
 }
 
+void notifyResultWithArtifactsAndVersion(String artifacts, String appVersion, String apiVersion) {
+  JenkinsHelper helper = new JenkinsHelper()
+  JenkinsStatus status = new JenkinsStatus()
+  SlackFormatter formatter = new SlackFormatter()
+  SlackSender sender = new SlackSender()
+  Config config = new Config()
+
+  def statusMessage = status.getStatusMessage()
+
+  if(shouldNotNotifySuccess(statusMessage)) {
+    println("SlackNotifier - No notification will be send for SUCCESS result")
+    return
+  }
+
+  def color = status.getStatusColor()
+  def duration = helper.getDuration()
+
+  String changes = null
+  if(config.getChangeList()) changes = helper.getChanges().join '\n'
+
+  String testSummary = null
+  if (config.getTestSummary()) {
+    JenkinsTestsSummary jenkinsTestsSummary = new JenkinsTestsSummary()
+    testSummary = jenkinsTestsSummary.getTestSummary()
+  }
+
+  def message = formatter.format2 "${statusMessage} after ${duration}", changes, testSummary, artifacts
+
+  sender.send message, color
+}
+
 void notifyResultFull() {
   env.TEST_SUMMARY = true
   env.CHANGE_LIST = true
