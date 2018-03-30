@@ -31,3 +31,20 @@ String format2(String title = '', String message = '', String testSummary = '', 
 
   return result
 }
+
+String format3(String title = '', String message = '', String testSummary = '', String artifact = '', String version = '') {
+  def helper = new JenkinsHelper()
+
+  def project = helper.getProjectName()
+  def branch = helper.getBranchName()
+  def buildNumber = helper.getBuildNumber()
+  def url = helper.getAbsoluteUrl()
+
+  def result = "${project} » ${branch} - #${buildNumber} ${title.trim()} (<${url}|Open>)"
+  if(version) result = result + "\nVersion:\n\t ${version.trim()}"
+  if(message) result = result + "\nChanges:\n\t ${message.trim()}"
+  if(artifact) result = result + "\nArtifacts:\n\t (<${artifact}|Download>)"
+  if(testSummary) result = result + "\n ${testSummary}"
+
+  return result
+}
