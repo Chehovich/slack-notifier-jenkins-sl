@@ -98,7 +98,7 @@ void notifyResultWithArtifacts(String artifacts) {
   sender.send message, color
 }
 
-void notifyResultWithArtifactsAndVersion(String artifacts, String appVersion, String apiVersion) {
+void notifyResultWithArtifactsAndVersion(String artifacts, String version) {
   JenkinsHelper helper = new JenkinsHelper()
   JenkinsStatus status = new JenkinsStatus()
   SlackFormatter formatter = new SlackFormatter()
@@ -124,7 +124,7 @@ void notifyResultWithArtifactsAndVersion(String artifacts, String appVersion, St
     testSummary = jenkinsTestsSummary.getTestSummary()
   }
 
-  def message = formatter.format2 "${statusMessage} after ${duration}", changes, testSummary, artifacts
+  def message = formatter.format3 "${statusMessage} after ${duration}", changes, testSummary, artifacts, version
 
   sender.send message, color
 }
